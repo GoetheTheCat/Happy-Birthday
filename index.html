@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Geheimer Zugang</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+    }
+
+    .container {
+      width: min(90%, 420px);
+      text-align: center;
+    }
+
+    .lock {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    p {
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+
+      border: 1px solid #555;
+      border-radius: 8px;
+
+      background: #222;
+      color: white;
+
+      font-size: 18px;
+      text-align: center;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: white;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 15px;
+
+      border: none;
+      border-radius: 8px;
+
+      background: white;
+      color: #111;
+
+      font-size: 17px;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    #message {
+      min-height: 24px;
+      margin-top: 18px;
+      color: #ff6b6b;
+    }
+
+    .success {
+      color: #7cff9b !important;
+    }
+
+    .shake {
+      animation: shake 0.35s;
+    }
+
+    @keyframes shake {
+      0%   { transform: translateX(0); }
+      25%  { transform: translateX(-8px); }
+      50%  { transform: translateX(8px); }
+      75%  { transform: translateX(-8px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" id="box">
+
+    <div class="lock">🔒</div>
+
+    <h1>Hallo Kevin</h1>
+
+    <p>
+     Tipp: Wie im Spiel, nur ist das case hier größer.
+      <br>
+      Die richtige Frequenz besteht aus 4 Zahlen.
+    </p>
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Frequenz"
+      autocomplete="off"
+    >
+
+    <button onclick="checkFrequenz()">
+      🔓 Entsperren
+    </button>
+
+    <div id="message"></div>
+
+  </div>
+
+
+  <script>
+
+    // ==========================================
+    // HIER DEIN PASSWORT EINTRAGEN
+    // ==========================================
+
+    const correctPassword = "2209";
+
+
+    // ==========================================
+    // HIER DIE ADRESSE DEINER GOOGLE-SITE EINTRAGEN
+    // ==========================================
+
+    const targetURL = "https://sites.google.com/view/mgs-happy-birthday/startseite";
+
+
+    // ==========================================
+    // PASSWORT PRÜFEN
+    // ==========================================
+
+    function checkPassword() {
+
+      const passwordInput = document.getElementById("password");
+      const message = document.getElementById("message");
+      const box = document.getElementById("box");
+
+      const enteredPassword = passwordInput.value;
+
+
+      // Passwort korrekt
+      if (enteredPassword === correctPassword) {
+
+        message.textContent = "Anrufen: Daffi";
+        message.classList.add("success");
+
+        // Kurze Verzögerung für den Effekt
+        setTimeout(function() {
+          window.location.href = targetURL;
+        }, 1000);
+
+      }
+
+
+      // Passwort falsch
+      else {
+
+        message.textContent =
+          "❌ Falsche Frequenz. Tipp 2: Snake steht darauf. ";
+
+        box.classList.remove("shake");
+
+        // Animation neu starten
+        void box.offsetWidth;
+
+        box.classList.add("shake");
+
+        passwordInput.value = "";
+        passwordInput.focus();
+      }
+    }
+
+
+    // Enter-Taste funktioniert ebenfalls
+    document.getElementById("password").addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        checkPassword();
+      }
+
+    });
+
+  </script>
+
+</body>
